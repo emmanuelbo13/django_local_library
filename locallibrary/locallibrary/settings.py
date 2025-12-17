@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'catalog.apps.CatalogConfig'
+    'catalog.apps.CatalogConfig', 
+    'schema_viewer'
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,15 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# SCHEMA VIEWER SETTINGS 
+SCHEMA_VIEWER = {
+    'apps': [
+        'contenttypes',
+        'catalog',
+    ],
+    'exclude': {
+        'auth': ['User']
+        #'catalog': ['SomeModel'],
+    },
+}

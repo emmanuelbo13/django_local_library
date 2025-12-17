@@ -22,7 +22,8 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('catalog/', include('catalog.urls'))
+    path('catalog/', include('catalog.urls')), 
+    path('schema-viewer/', include('schema_viewer.urls'))
 ]
 
 # Use static() to add URL mapping to serve static files during development (only)

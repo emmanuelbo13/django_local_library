@@ -20,7 +20,7 @@ class Genre(models.Model):
     
     class Meta:
         constraints = [
-            UniqueConstraint(
+            UniqueConstraint( # Enforce case-insensitive uniqueness on 'name' field in order to prevent duplicate genres with different casing
                 Lower('name'), # Lowercase the 'name' field for case-insensitive comparison
                 name='genre_name_case_insensitive_unique', # Name of the constraint
                 violation_error_code='Genre already exists (case insensitive match)' # Custom error message
@@ -34,6 +34,7 @@ class Book(models.Model):
     summary = models.TextField(max_length=1000, help_text="Enter a brief description of the book")
     isbn = models.CharField('ISBN', max_length=13, unique=True, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
+    language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True) # 
 
     def __str__(self):
         return self.title
@@ -42,13 +43,19 @@ class Book(models.Model):
         """Returns the url to access a particular book instance"""
         return reverse('book-detail', args=[str(self.id)])
     
+    def display_genre(self):
+        """Create a string for the Genre. This is required to display genre in Admin."""
+        return ', '.join(genre.name for genre in self.genre.all()[:2])
+    
+    display_genre.short_description = 'Genre'
+    
 import uuid  # Required for unique book instances
 
 class BookInstance(models.Model):
     """Model representing a specific copy of a book (i.e that can be borrowed from the library)"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text="Unique ID for this particular book accross whole library")
     book = models.ForeignKey('Book', on_delete=models.RESTRICT, null=True)
-    imprint = models.CharField(max_length=200)
+    imprint = models.CharField(max_length=200) # publisher info, such as edition, printing, etc. ex
     due_back = models.DateField(null=True, blank=True)
     
     LOAN_STATUS = (
@@ -72,6 +79,11 @@ class BookInstance(models.Model):
     
     def __str__(self):
         return f'{self.id} ({self.book.title})'
+    
+    def display_book(self):
+        return ''.join(self.book.title)
+    
+    display_book.short_description = 'Book'
 
 class Author(models.Model):
     """Model representing an author"""
@@ -90,5 +102,25 @@ class Author(models.Model):
     def __str__(self):
         return f'{self.last_name}, {self.first_name}'
     
-
 # Language model
+class Language(models.Model):
+    name = models.CharField(
+        max_length=200, 
+        unique=True,
+        help_text="Book language"
+    )
+
+    def __str__(self):
+        return self.name 
+    
+    def get_absolute_url(self):
+        return reverse('language-detail', args=[self.name])
+    
+    class Meta:
+        constraints=[
+            UniqueConstraint(
+                Lower('name'), 
+                name='language_name_case_insensitive_unique',
+                violation_error_code='Language already exists (case insensitive match)'
+            )
+        ]
