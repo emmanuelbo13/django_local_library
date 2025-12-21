@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Book, Author, BookInstance, Genre
+from django.views.generic import ListView, DetailView
 
 # Create your views here.
 def index(request):
@@ -32,3 +33,10 @@ def index(request):
 
     print(type(fantasy_books))
     return render(request, 'index.html', context=context)   
+
+class BookListView(ListView):
+    model = Book
+    context_object_name = 'book_list'
+
+class BookDetailView(DetailView):
+    model = Book
