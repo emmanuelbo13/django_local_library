@@ -16,7 +16,7 @@ class Genre(models.Model):
     
     def get_absolute_url(self):
         """Returns the url to access a particular genre instance"""
-        return reverse('genre-detail', args=[str(self.id)]) 
+        return reverse('genre_detail', args=[str(self.id)]) 
     
     class Meta:
         constraints = [
@@ -41,13 +41,13 @@ class Book(models.Model):
     
     def get_absolute_url(self):
         """Returns the url to access a particular book instance"""
-        return reverse('book-detail', args=[str(self.id)])
+        return reverse('book_detail', args=[str(self.id)])
     
     def display_genre(self):
         """Create a string for the Genre. This is required to display genre in Admin."""
         return ', '.join(genre.name for genre in self.genre.all()[:2])
     
-    display_genre.short_description = 'Genre'
+    display_genre.short_description = 'Genre' #
     
 import uuid  # Required for unique book instances
 
@@ -97,7 +97,7 @@ class Author(models.Model):
 
     def get_absolute_url(self):
         """Returns the url to access a particular author instance"""
-        return reverse('author-detail', args=[str(self.id)]) 
+        return reverse('author_detail', args=[str(self.id)]) 
 
     def __str__(self):
         return f'{self.last_name}, {self.first_name}'
@@ -114,7 +114,7 @@ class Language(models.Model):
         return self.name 
     
     def get_absolute_url(self):
-        return reverse('language-detail', args=[self.name])
+        return reverse('language_detail', args=[self.name])
     
     class Meta:
         constraints=[

@@ -21,6 +21,10 @@ def index(request):
     # The 'all()' is implied by default
     num_authors = Author.objects.count()
 
+    num_visits = request.session.get('num_visits', 0)
+    num_visits += 1
+    request.session['num_visits'] = num_visits
+
     context = {
         'num_books': num_books,
         'fantasy_books_count': fantasy_books_count,
@@ -28,7 +32,8 @@ def index(request):
         'num_instances_available': num_instaces_available, 
         'num_authors': num_authors,
         'fantasy_books': fantasy_books, 
-        'num_genres': num_genres
+        'num_genres': num_genres, 
+        'num_visits': num_visits,
     }
 
     print(type(fantasy_books))
@@ -37,6 +42,15 @@ def index(request):
 class BookListView(ListView):
     model = Book
     context_object_name = 'book_list'
+    paginate_by = 2
 
 class BookDetailView(DetailView):
     model = Book
+
+class AuthorListView(ListView):
+    model = Author 
+    context_object_name = 'author_list'
+    # paginate_by = 2
+
+class AuthorDetailView(DetailView):
+    model = Author
