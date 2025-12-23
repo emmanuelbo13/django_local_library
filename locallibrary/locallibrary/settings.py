@@ -53,10 +53,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'locallibrary.urls'
 
+import os
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,3 +136,8 @@ SCHEMA_VIEWER = {
         #'catalog': ['SomeModel'],
     },
 }
+
+LOGIN_REDIRECT_URL = '/'
+
+# allow django to send emails to an email address that is not in the database. 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
