@@ -7,6 +7,11 @@
         Welcome to LocalLibrary, a website developed by
         <em>Mozilla Developer Network</em>!
     </p>
+    {% if perms.catalog.can_mark_returned %}
+        <p>Permission to mark returned granted</p>
+    {% else %}
+        <p>Permission to mark returned not granted</p>
+    {% endif %}
     <h2>Dynamic content</h2>
     <p>The library has the following record counts:</p>
     <ul>

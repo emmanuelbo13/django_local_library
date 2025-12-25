@@ -29,7 +29,7 @@ admin.site.register(Genre)
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
     list_filter = ('status', 'due_back') # filters in the right sidebar
-    list_display = ('display_book', 'status', 'due_back', 'id')
+    list_display = ('display_book', 'status', 'due_back', 'id', 'borrower')
 
     # organize detail view layout
     fieldsets = (
@@ -37,7 +37,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
             'fields': ('book', 'imprint', 'id')
         }),
         ('Availability', {
-            'fields': ('status', 'due_back')
+            'fields': ('status', 'due_back', 'borrower')
         }),
     )
 
