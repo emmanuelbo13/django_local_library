@@ -34,7 +34,11 @@
 							</li>
 							{% if user.is_staff %}
 								<hr>
-								<a href="{% url 'all_borrowed' %}">All borrowed</a>
+								<h6>Staff</h6>
+								<li><a href="{% url 'all_borrowed' %}">All borrowed</a></li>
+								{% if perms.catalog.add_author %}
+									<li><a href="{% url 'author_create' %}">Create author</a></li>
+								{% endif %}
 							{% endif %}
 						{% else %}	
 							<li><a href="{% url 'login' %}?next={{request.path}}">Login</a></li>
