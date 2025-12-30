@@ -116,7 +116,7 @@ def renew_book_librarian(request, pk):
 class AuthorListView(ListView):
     model = Author 
     context_object_name = 'author_list'
-    # paginate_by = 2
+    paginate_by = 5
 
 class AuthorDetailView(DetailView):
     model = Author
