@@ -3,7 +3,7 @@ from .models import Book, Author, BookInstance, Genre
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.http import HttpResponseRedirect # Http404
+from django.http import HttpResponseRedirect  # Http404
 from django.urls import reverse, reverse_lazy
 from catalog.forms import RenewBookForm
 from django.contrib.auth.decorators import login_required, permission_required
@@ -11,7 +11,7 @@ import datetime
 
 # Create your views here.
 def index(request):
-    """View function for home page of site"""
+
     num_books = Book.objects.all().count()
     num_instaces = BookInstance.objects.all().count()
 

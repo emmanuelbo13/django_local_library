@@ -137,7 +137,8 @@ SCHEMA_VIEWER = {
     },
 }
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/catalog/'
+LOGIN_URL = '/accounts/login/'
 
 # allow django to send emails to an email address that is not in the database. 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -23,16 +23,14 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('catalog/', include('catalog.urls')), 
-    path('schema-viewer/', include('schema_viewer.urls'))
+    path('schema-viewer/', include('schema_viewer.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 # Use static() to add URL mapping to serve static files during development (only)
 urlpatterns+= static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+# Make catalog index the root view
 urlpatterns += [
-    path('', RedirectView.as_view(url='catalog/', permanent=True)),
-]
-
-urlpatterns += [
-    path('accounts/', include('django.contrib.auth.urls'))
+    path('', RedirectView.as_view(url='catalog/', permanent=False)),
 ]
